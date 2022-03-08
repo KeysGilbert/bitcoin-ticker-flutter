@@ -10,10 +10,11 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = "USD";
 
-  List<DropdownMenuItem> getItems() {
+  DropdownButton<String> getDropdownButton() {
     String currency;
     List<DropdownMenuItem<String>> dropdownItems = [];
 
+    //populate list
     for (int i = 0; i < currenciesList.length; i++) {
       currency = currenciesList[i]; //set currency
 
@@ -24,13 +25,24 @@ class _PriceScreenState extends State<PriceScreen> {
       );
       dropdownItems.add(newItem); //add item to list
     }
-    return dropdownItems;
+
+    return DropdownButton<String>(
+        value: selectedCurrency,
+        items: dropdownItems,
+        onChanged: (value) {
+          setState(() {
+            selectedCurrency = value;
+          });
+        });
   }
 
   List<Widget> getCupertinoItems() {
     List<Widget> pickerItems = [];
     for (int i = 0; i < currenciesList.length; i++) {
-      var newItem = Text(currenciesList[i], style: TextStyle(color: Colors.white),);
+      var newItem = Text(
+        currenciesList[i],
+        style: TextStyle(color: Colors.white),
+      );
       pickerItems.add(newItem);
     }
     return pickerItems;
@@ -86,12 +98,3 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 }
-/* DropdownButton<String>(
-                value: selectedCurrency,
-                items: getItems(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCurrency = value;
-                  });
-                }),
-*/
